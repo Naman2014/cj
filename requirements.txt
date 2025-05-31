@@ -3,4 +3,5 @@ python-dotenv>=1.0.0
 together>=0.1.0
 groq>=0.4.0
 flask==3.0.2
-httpx==0.24.1 
+httpx==0.24.1
+streamlit==1.34.0 

@@ -1,11 +1,16 @@
 from groq import Groq
 import httpx
+import os
+from dotenv import load_dotenv
 
 class PlannerAgent:
     def __init__(self):
+        # Load environment variables
+        load_dotenv()
+        
         # Create a custom HTTP client without proxies
         http_client = httpx.Client(timeout=30.0)
-        self.client = Groq(http_client=http_client)
+        self.client = Groq(api_key=os.getenv("GROQ_API_KEY"), http_client=http_client)
         self.conversation_history = []
 
     def create_plan(self, topics, duration_days):
@@ -23,7 +28,7 @@ class PlannerAgent:
             model="deepseek-r1-distill-llama-70b",
             messages=self.conversation_history,
             temperature=0.6,
-            max_tokens=4096,
+            max_tokens=3072,
             top_p=0.95,
             stream=True,
             stop=None,

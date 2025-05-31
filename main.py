@@ -1,22 +1,48 @@
 from agents.orchestrator import OrchestratorAgent
-from dotenv import load_dotenv
-load_dotenv()
+import sys
+
+def print_welcome():
+    print("\n=== Welcome to Coding Ninjas Learning Assistant ===")
+    print("I can help you with:")
+    print("1. Understanding programming concepts")
+    print("2. Getting help with code")
+    print("3. Creating study plans")
+    print("4. Providing motivation")
+    print("\nJust type your question or request, and I'll help you!")
+    print("Type 'exit' or 'quit' to end the session.")
+    print("==============================================\n")
 
 def main():
+    # Initialize the orchestrator
     orchestrator = OrchestratorAgent()
-
-    # Example Usage
-    print("\n--- Concept Explanation ---")
-    print(orchestrator.route("concept", "Dynamic Programming"))
-
-    print("\n--- Code Assistance ---")
-    print(orchestrator.route("code", "Write a function to detect a cycle in a directed graph."))
-
-    print("\n--- Study Plan ---")
-    print(orchestrator.route("plan", {"topics": ["Arrays", "Trees", "Graphs"], "duration_days": 5}))
-
-    print("\n--- Motivation ---")
-    print(orchestrator.route("motivation", None))
+    
+    # Print welcome message
+    print_welcome()
+    
+    while True:
+        try:
+            # Get user input
+            user_input = input("\nYou: ").strip()
+            
+            # Check for exit command
+            if user_input.lower() in ['exit', 'quit']:
+                print("\nThank you for using Coding Ninjas Learning Assistant. Goodbye!")
+                break
+            
+            # Skip empty input
+            if not user_input:
+                continue
+            
+            # Process the request
+            print("\nAssistant: ", end="")
+            response = orchestrator.process_request(user_input)
+            
+        except KeyboardInterrupt:
+            print("\n\nThank you for using Coding Ninjas Learning Assistant. Goodbye!")
+            break
+        except Exception as e:
+            print(f"\nAn error occurred: {str(e)}")
+            print("Please try again or type 'exit' to quit.")
 
 if __name__ == "__main__":
     main()
